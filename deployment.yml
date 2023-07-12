@@ -1,0 +1,20 @@
+metadata:
+  name: test333-app-deployment
+  labels:
+    app: test333-app
+  namespace: santhosh
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: test333-app
+  template:
+    metadata:
+      labels:
+        app: test333-app
+    spec:
+      containers:
+      - name: test333-app
+        image: santhosh0404/san:latest 
+        ports:
+        - containerPort: 5000

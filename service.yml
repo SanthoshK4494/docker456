@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: test333-app
+  namespace: santhosh
+spec:
+  selector:
+    app: test333-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9000
