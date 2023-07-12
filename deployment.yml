@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: test333-app
-        image: santhosh0404/san:latest 
+        image: santhosh0404/san
         ports:
         - containerPort: 5000
