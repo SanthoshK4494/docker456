@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp32
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myapp32
+  template:
+    metadata:
+      labels:
+        app: myapp32
+    spec:
+      containers:
+        - name: myapp32
+          image:santhosh0404/test333-app:latest
+          ports: 
+            - containerPort: 80
