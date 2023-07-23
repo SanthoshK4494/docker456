@@ -20,35 +20,37 @@ spec:
       labels:
         app: santhosh-app
     spec:
-      initContainers:
-      - name: init-setup
-        image: busybox:latest
-        command: ['sh', '-c', 'ls; pwd; sleep 10']
-        envFrom:
-        - configMapRef:
-            name: santhosh-app-deployment
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: envi
+                    operator: In
+                    values:
+                      - prob
       containers:
-      - name: santhosh-app
-        image: santhosh0404/test333-app:latest
-        ports:
-        - containerPort: 5000
-        livenessProbe:
-          httpGet:
-            path: /_status/healthz
-            port: 5000   # Corrected port to match the containerPort
-          initialDelaySeconds: 8
-          periodSeconds: 10
-          failureThreshold: 3  # Corrected field name
-          successThreshold: 1  # Corrected field name
-        readinessProbe:
-          httpGet:
-            path: /readiness
-            port: 5000   # Corrected port to match the containerPort
-          initialDelaySeconds: 15
-          periodSeconds: 5
-        env:
-        - name: santhosh-app-deployment
-          valueFrom:
-            configMapKeyRef:
-              key: DB_HOST
-              name: santhosh-app-deployment
+        - name: santhosh-app
+          image: santhosh0404/test333-app:latest
+          ports:
+            - containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: /_status/healthz
+              port: 5000
+            initialDelaySeconds: 8
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: santhosh-app-deployment
+                  key: DB_HOST
