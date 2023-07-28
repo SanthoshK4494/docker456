@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,10 +26,19 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                  - key: envi
+                  - key: environment
                     operator: In
                     values:
-                      - prob
+                      - production
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - santhosh-app
+              topologyKey: "kubernetes.io/hostname"
       containers:
         - name: santhosh-app
           image: santhosh0404/test333-app:latest
@@ -49,8 +59,12 @@ spec:
             initialDelaySeconds: 15
             periodSeconds: 5
           env:
-            - name: DB_HOST
+            - name: santhosh-app-deployment
               valueFrom:
                 configMapKeyRef:
                   name: santhosh-app-deployment
                   key: DB_HOST
+      tolerations:  
+        - key: "special"
+          operator: "Exists"
+          effect: "NoSchedule"
