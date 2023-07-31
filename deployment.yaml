@@ -42,7 +42,7 @@ spec:
       
       containers:
         - name: santhosh-app
-          image: santhosh0404/test333-app:latest
+          image: manishthota25/mani:latest
           ports:
             - containerPort: 5000
           livenessProbe:
