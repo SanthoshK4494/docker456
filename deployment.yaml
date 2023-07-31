@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -65,4 +64,7 @@ spec:
                 configMapKeyRef:
                   name: santhosh-app-deployment
                   key: DB_HOST
-      
+      tolerations:
+        - key: "special"
+          operator: "Exists"
+          effect: "NoSchedule"
