@@ -39,6 +39,7 @@ spec:
                     values:
                       - santhosh-app
               topologyKey: "kubernetes.io/hostname"
+      
       containers:
         - name: santhosh-app
           image: santhosh0404/test333-app:latest
@@ -64,7 +65,4 @@ spec:
                 configMapKeyRef:
                   name: santhosh-app-deployment
                   key: DB_HOST
-      tolerations:  
-        - key: "special"
-          operator: "Exists"
-          effect: "NoSchedule"
+      
