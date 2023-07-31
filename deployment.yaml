@@ -29,7 +29,7 @@ spec:
                   - key: environment
                     operator: In
                     values:
-                      - production
+                      - prod
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
