@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: santhosh-app
+  name: santhosh-app-deployment
   namespace: myacr-kube
   labels:
-    app: santhosh-app
+    app: santhosh-app-deployment
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: santhosh-app
+      app: santhosh-app-deployment
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       labels:
-        app: new-docker-app
+        app: santhosh-app-deployment
     spec:
       affinity:
         nodeAffinity:
@@ -36,10 +36,10 @@ spec:
                   - key: app
                     operator: In
                     values:
-                      - santhosh-app
+                      - santhosh-app-deployment
               topologyKey: "kubernetes.io/hostname"
       containers:
-        - name: santhosh-app
+        - name: santhosh-app-deployment
           image: kubeassignment.azurecr.io/new_docker-app:latest
           ports:
             - containerPort: 5000
@@ -61,5 +61,5 @@ spec:
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: santhosh-app
+                  name: santhosh-app-deployment
                   key: DB_HOST
