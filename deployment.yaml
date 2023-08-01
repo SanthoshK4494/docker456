@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: santhosh-app-deployment
+  name: santhosh-app
   namespace: myacr-kube
   labels:
     app: santhosh-app
@@ -18,17 +18,17 @@ spec:
   template:
     metadata:
       labels:
-        app: santhosh-app
+        app: new-docker-app
     spec:
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                  - key: env
+                  - key: environment
                     operator: In
                     values:
-                      - prod
+                      - production
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
@@ -38,10 +38,9 @@ spec:
                     values:
                       - santhosh-app
               topologyKey: "kubernetes.io/hostname"
-      
       containers:
         - name: santhosh-app
-          image: manishthota25/mani:latest
+          image: kubeassignment.azurecr.io/new_docker-app:latest
           ports:
             - containerPort: 5000
           livenessProbe:
@@ -59,12 +58,8 @@ spec:
             initialDelaySeconds: 15
             periodSeconds: 5
           env:
-            - name: santhosh-app-deployment
+            - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: santhosh-app-deployment
+                  name: santhosh-app
                   key: DB_HOST
-      tolerations:
-        - key: "special"
-          operator: "Exists"
-          effect: "NoSchedule"
