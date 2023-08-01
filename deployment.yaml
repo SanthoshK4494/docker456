@@ -57,7 +57,7 @@ spec:
               port: 5000
             initialDelaySeconds: 15
             periodSeconds: 5
-          env:production
+          env:
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
