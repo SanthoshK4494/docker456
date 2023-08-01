@@ -40,8 +40,8 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       containers:
         - name: santhosh-app-deployment
-          image: kubeassignment.azurecr.io/new_docker-app:latest
-          ports:
+          image: santhosh0404/test333-app:latest
+         ports:
             - containerPort: 5000
           livenessProbe:
             httpGet:
